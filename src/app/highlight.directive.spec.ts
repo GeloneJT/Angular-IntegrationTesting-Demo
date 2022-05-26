@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HighlightDirective } from './highlight.directive';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core'; 
@@ -16,7 +16,7 @@ class DirectiveHostComponent {
 describe('HighlightDirective', () => {
   let fixture: ComponentFixture<DirectiveHostComponent>;
   
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DirectiveHostComponent, HighlightDirective ]
     })
