@@ -30,8 +30,8 @@ describe('VoterComponent', () => {
     component.myVote = 1;
     fixture.detectChanges();
 
-    let de = fixture.debugElement.query(By.css('.bi bi-hand-thumbs-up'));
+    let de = fixture.debugElement.query(By.css('.bi-hand-thumbs-up'));
 
-    // expect(de.classes['highlighted']).toBeTruthy();
+    expect(de.classes['highlighted']).toBeTruthy();
   });
 });
