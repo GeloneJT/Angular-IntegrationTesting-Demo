@@ -15,14 +15,23 @@ describe('VoterComponent', () => {
     component = fixture.componentInstance;
   });
 
-  // it('should render total votes', () => {
-  //   component.othersVote = 20;
-  //   component.myVote = 1;
-  //   fixture.detectChanges();
+  it('should render total votes', () => {
+    component.othersVote = 20;
+    component.myVote = 1;
+    fixture.detectChanges();
 
-  //   let de = fixture.debugElement.query(By.css('vote-count'));
-  //   let el: HTMLElement =  de.nativeElement;
+    let de = fixture.debugElement.query(By.css('.vote-count'));
+    let el: HTMLElement = de.nativeElement;
 
-  //   expect(el.innerText).toContain(21);
-  // });
+    expect(el.innerText as unknown as number).toContain(21);
+  });
+
+  it('should highlight the upvote button if I have upvoted', () => {
+    component.myVote = 1;
+    fixture.detectChanges();
+
+    let de = fixture.debugElement.query(By.css('.bi bi-hand-thumbs-up'));
+
+    // expect(de.classes['highlighted']).toBeTruthy();
+  });
 });
