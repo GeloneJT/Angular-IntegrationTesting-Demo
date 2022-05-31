@@ -4,16 +4,37 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { UserDetailsComponent } from './user-details.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EMPTY, Subject } from 'rxjs';
 
-xdescribe('UserDetailsComponent', () => {
+class RouterStub {
+  navigate(params: any) {}
+}
+
+class ActivatedRouteStub {
+  private subject = new Subject();
+
+  push(value: unknown) {
+    this.subject.next(value);
+  }
+
+  get params() {
+    return this.subject.asObservable();
+  }
+}
+
+describe('UserDetailsComponent', () => {
   let component: UserDetailsComponent;
   let fixture: ComponentFixture<UserDetailsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [UserDetailsComponent],
+      providers: [
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +43,23 @@ xdescribe('UserDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should redirect the user to the users page after saving', () => {
+    let router = TestBed.inject(Router);
+    let spy = spyOn(router, 'navigate');
+
+    component.save();
+
+    expect(spy).toHaveBeenCalledWith(['users']);
+  });
+
+  it('should naviagate the user to the not found page when an invalid user id is passed', () => {
+    let router = TestBed.inject(Router);
+    let spy = spyOn(router, 'navigate');
+
+    let route: ActivatedRouteStub;
+    route = fixture.debugElement.injector.get(ActivatedRoute) as any;
+    route.push({ id: 0 });
+
+    expect(spy).toHaveBeenCalledWith(['not-found']);
   });
 });
