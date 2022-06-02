@@ -13,6 +13,7 @@ import { UsersComponent } from './users/users.component';
 import { HighlightDirective } from './highlight.directive'; 
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
+import { NavComponent } from './nav/nav.component';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { routes } from './app.routes';
     VoterComponent,
     UsersComponent,
     HighlightDirective,
-    // NavComponent,
+    NavComponent,
   ],
   imports: [
     BrowserModule,
